@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${site['name']})}"></head>
+<body class="font-body antialiased">
+<div id="bar"></div>
+<div id="glow"></div>
+
+<header id="nav" class="fixed inset-x-0 top-0 z-50 transition">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a href="#top" class="font-display text-lg font-bold" th:text="${site['name']}">Your Name</a>
+    <div class="hidden gap-6 text-sm text-muted sm:flex">
+      <a href="#about" class="transition hover:text-saffron">About</a>
+      <a href="#skills" class="transition hover:text-saffron">Skills</a>
+      <a href="#projects" class="transition hover:text-saffron">Projects</a>
+      <a href="#education" class="transition hover:text-saffron">Education</a>
+      <a href="#contact" class="transition hover:text-saffron">Contact</a>
+    </div>
+    <button id="menu-btn" type="button" class="btn-ghost !px-4 !py-2 text-sm sm:hidden" aria-expanded="false" aria-controls="menu">Menu</button>
+  </nav>
+  <div id="menu" class="hidden border-t border-line px-6 pb-4 sm:hidden">
+    <a href="#about" class="block py-3 text-lg">About</a>
+    <a href="#skills" class="block py-3 text-lg">Skills</a>
+    <a href="#projects" class="block py-3 text-lg">Projects</a>
+    <a href="#education" class="block py-3 text-lg">Education</a>
+    <a href="#contact" class="block py-3 text-lg">Contact</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO: the one big moment. Name rises letter by letter, a particle network follows the cursor. -->
+  <section class="hero relative isolate flex items-center overflow-hidden">
+    <div class="sun"></div>
+    <canvas id="field" class="absolute inset-0 -z-10 h-full w-full"></canvas>
+    <div class="mx-auto w-full max-w-6xl px-6 pt-24">
+      <h1 data-split class="font-display text-5xl font-extrabold leading-[1.05] sm:text-7xl lg:text-8xl" th:text="${site['name']}">Your Name</h1>
+      <p class="enter mt-6 font-display text-2xl text-saffron sm:text-3xl" style="--d:900ms">
+        <span data-typed class="caret" th:data-words="${site['roles']}">Full-Stack Developer</span>
+      </p>
+      <p class="enter mt-6 max-w-xl text-lg text-muted" style="--d:1100ms" th:text="${site['tagline']}">Short intro.</p>
+      <div class="enter mt-10 flex flex-wrap gap-4" style="--d:1300ms">
+        <a href="#projects" class="btn">View my projects</a>
+        <a href="#contact" class="btn-ghost">Contact me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER: skills sliding in opposite directions -->
+  <section class="border-y border-line py-8" aria-label="Skills ticker">
+    <div class="marquee">
+      <div class="track">
+        <span class="pill" th:each="s : ${site['skills']}" th:text="${s}">Java</span>
+        <span class="pill" aria-hidden="true" th:each="s : ${site['skills']}" th:text="${s}">Java</span>
+      </div>
+    </div>
+    <div class="marquee mt-4">
+      <div class="track rev">
+        <span class="pill" th:each="s : ${site['skills']}" th:text="${s}">Java</span>
+        <span class="pill" aria-hidden="true" th:each="s : ${site['skills']}" th:text="${s}">Java</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT: professional summary (edit the text here) -->
+  <section id="about" class="mx-auto max-w-6xl px-6 py-24">
+    <div class="grid gap-10 lg:grid-cols-5">
+      <h2 class="reveal self-start font-display text-3xl font-bold sm:text-4xl lg:sticky lg:top-28 lg:col-span-2">Professional summary</h2>
+      <div class="reveal max-w-prose space-y-5 text-lg leading-relaxed text-muted lg:col-span-3" style="transition-delay:100ms">
+        <p>Master of Computer Applications (MCA) student and full-stack developer experienced in building web applications with the MERN stack: MongoDB, Express.js, React.js, and Node.js.</p>
+        <p>Skilled in Java, Python, FastAPI, Django, REST APIs, JSON Web Token (JWT) authentication, Docker, and CI/CD pipelines with GitHub Actions, focusing on secure and scalable software development.</p>
+        <p>Seeking software developer or full-stack developer roles and internships to apply technical skills and contribute effectively within an Agile team.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS: grouped like the resume -->
+  <section id="skills" class="mx-auto max-w-6xl px-6 pb-24">
+    <div class="grid gap-10 lg:grid-cols-5">
+      <h2 class="reveal self-start font-display text-3xl font-bold sm:text-4xl lg:sticky lg:top-28 lg:col-span-2">Technical skills</h2>
+      <dl class="lg:col-span-3">
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">Programming languages</dt>
+          <dd><span class="chip">C</span><span class="chip">Java</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">SQL</span></dd>
+        </div>
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">Frontend</dt>
+          <dd><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">React.js</span><span class="chip">Tailwind CSS</span></dd>
+        </div>
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">Backend</dt>
+          <dd><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">FastAPI</span><span class="chip">Django</span></dd>
+        </div>
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">APIs and authentication</dt>
+          <dd><span class="chip">REST APIs</span><span class="chip">JSON Web Token (JWT)</span></dd>
+        </div>
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">Databases</dt>
+          <dd><span class="chip">MongoDB</span><span class="chip">MySQL</span></dd>
+        </div>
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">DevOps and tools</dt>
+          <dd><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Linux</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">GitHub Actions</span><span class="chip">CI/CD</span></dd>
+        </div>
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">Testing</dt>
+          <dd><span class="chip">Jest</span><span class="chip">Unit testing</span><span class="chip">Integration testing</span></dd>
+        </div>
+        <div class="reveal border-t border-line py-5">
+          <dt class="mb-3 font-display font-bold">Core computer science</dt>
+          <dd><span class="chip">Data Structures and Algorithms</span><span class="chip">Object-Oriented Programming (OOP)</span><span class="chip">Database Management Systems (DBMS)</span><span class="chip">Operating Systems</span><span class="chip">Computer Networks</span><span class="chip">Software Engineering</span></dd>
+        </div>
+        <div class="reveal border-y border-line py-5">
+          <dt class="mb-3 font-display font-bold">Additional skills</dt>
+          <dd><span class="chip">Problem-solving</span><span class="chip">Teamwork</span><span class="chip">Communication</span><span class="chip">Time management</span><span class="chip">Adaptability</span></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- PROJECTS: filled from the database. Only the owner can add to it. -->
+  <section id="projects" class="mx-auto max-w-6xl px-6 pb-24">
+    <div class="reveal">
+      <h2 class="font-display text-3xl font-bold sm:text-4xl">Projects</h2>
+      <p class="mt-3 text-muted">Things I have built. Hover a card to explore it.</p>
+    </div>
+
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div th:each="p, it : ${projects}" class="reveal" th:style="'transition-delay:' + ${it.index % 3 * 90} + 'ms'">
+        <article class="tilt group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-panel">
+          <div class="overflow-hidden">
+            <img th:if="${p.imageUrl}" th:src="@{${p.imageUrl}}" th:alt="${p.title + ' screenshot'}" loading="lazy"
+                 class="h-48 w-full object-cover transition duration-700 group-hover:scale-105">
+            <div th:unless="${p.imageUrl}" class="grid h-48 place-items-center font-display text-7xl font-extrabold text-saffron/70"
+                 style="background:linear-gradient(135deg,#0D2530,#143c4a)" th:text="${#strings.substring(p.title,0,1)}">A</div>
+          </div>
+          <div class="flex flex-1 flex-col p-6">
+            <h3 class="font-display text-xl font-bold" th:text="${p.title}">Project title</h3>
+            <p class="mt-2 flex-1 text-muted" th:text="${p.description}">Description</p>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li th:each="t : ${p.techList}" class="rounded-full border border-line px-3 py-1 text-xs text-lagoon" th:text="${t}">React</li>
+            </ul>
+            <div class="mt-5 flex gap-3" th:if="${p.liveUrl != null or p.githubUrl != null}">
+              <a th:if="${p.liveUrl}" th:href="${p.liveUrl}" target="_blank" rel="noopener" class="btn !px-4 !py-2 text-sm">Live demo</a>
+              <a th:if="${p.githubUrl}" th:href="${p.githubUrl}" target="_blank" rel="noopener" class="btn-ghost !px-4 !py-2 text-sm">Source code</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <p th:if="${projects.isEmpty()}" class="mt-12 rounded-2xl border border-dashed border-line p-12 text-center text-muted">
+      Projects are coming soon.
+    </p>
+  </section>
+
+  <!-- EDUCATION (edit the text here) -->
+  <section id="education" class="mx-auto max-w-6xl px-6 pb-24">
+    <div class="grid gap-10 lg:grid-cols-5">
+      <h2 class="reveal self-start font-display text-3xl font-bold sm:text-4xl lg:sticky lg:top-28 lg:col-span-2">Education</h2>
+      <ol class="lg:col-span-3">
+        <li class="reveal grid gap-1 border-t border-line py-6 sm:grid-cols-[6.5rem_1fr_auto] sm:gap-6">
+          <p class="text-sm text-muted sm:pt-1">2025 to 2027</p>
+          <div>
+            <p class="font-display text-lg font-bold">Master of Computer Applications (MCA)</p>
+            <p class="text-muted">GIET University, Gunupur</p>
+          </div>
+          <p class="font-display text-saffron">CGPA 7.17 <span class="font-body text-sm text-muted">(pursuing)</span></p>
+        </li>
+        <li class="reveal grid gap-1 border-t border-line py-6 sm:grid-cols-[6.5rem_1fr_auto] sm:gap-6">
+          <p class="text-sm text-muted sm:pt-1">2022 to 2025</p>
+          <div>
+            <p class="font-display text-lg font-bold">Bachelor of Computer Applications (BCA)</p>
+            <p class="text-muted">Utkal University (S.V.M. College)</p>
+          </div>
+          <p class="font-display text-saffron">CGPA 7.60</p>
+        </li>
+        <li class="reveal grid gap-1 border-t border-line py-6 sm:grid-cols-[6.5rem_1fr_auto] sm:gap-6">
+          <p class="text-sm text-muted sm:pt-1">2020 to 2022</p>
+          <div>
+            <p class="font-display text-lg font-bold">Higher Secondary (+2 Science)</p>
+            <p class="text-muted">Sidha Baranga Higher Secondary School of Education and Technology</p>
+            <p class="text-sm text-muted">Council of Higher Secondary Education (CHSE), Odisha</p>
+          </div>
+          <p class="font-display text-saffron">62.5%</p>
+        </li>
+        <li class="reveal grid gap-1 border-y border-line py-6 sm:grid-cols-[6.5rem_1fr_auto] sm:gap-6">
+          <p class="text-sm text-muted sm:pt-1">2020</p>
+          <div>
+            <p class="font-display text-lg font-bold">Matriculation (10th)</p>
+            <p class="text-muted">Narendra Vidyamandir</p>
+            <p class="text-sm text-muted">Board of Secondary Education (BSE), Odisha</p>
+          </div>
+          <p class="font-display text-saffron">53.5%</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="mx-auto max-w-6xl px-6 pb-24">
+    <div class="reveal rounded-3xl border border-line bg-panel p-10 sm:p-16">
+      <h2 class="font-display text-4xl font-extrabold sm:text-6xl">Let's build something together.</h2>
+      <p class="mt-4 max-w-xl text-lg text-muted">I am looking for software developer and full-stack developer roles and internships. Email is the quickest way to reach me.</p>
+      <a th:href="'mailto:' + ${site['email']}" th:text="${site['email']}"
+         class="mt-8 block break-all font-display text-2xl text-saffron underline decoration-saffron/40 underline-offset-8 transition hover:decoration-saffron sm:text-3xl">email</a>
+      <a th:href="'tel:' + ${#strings.replace(site['phone'], ' ', '')}" th:text="${site['phone']}"
+         class="mt-4 inline-block text-lg text-mist transition hover:text-saffron">phone</a>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a th:href="${site['github']}" target="_blank" rel="noopener" class="btn-ghost">GitHub</a>
+        <a th:href="${site['linkedin']}" target="_blank" rel="noopener" class="btn-ghost">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-line">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 text-sm text-muted">
+    <p th:text="'© ' + ${#dates.year(#dates.createNow())} + ' ' + ${site['name']}">© 2026</p>
+    <a th:href="@{/admin}" class="transition hover:text-saffron">Owner login</a>
+  </div>
+</footer>
+
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Owner dashboard')}"></head>
+<body class="font-body antialiased">
+<header class="border-b border-line">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
+    <p class="font-display text-lg font-bold">Owner dashboard</p>
+    <div class="flex items-center gap-3">
+      <a th:href="@{/}" class="btn-ghost">View site</a>
+      <form th:action="@{/logout}" method="post"><button class="btn-ghost" type="submit">Log out</button></form>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto grid max-w-6xl gap-10 px-6 py-10 lg:grid-cols-5">
+  <section class="enter lg:col-span-2">
+    <h1 class="font-display text-2xl font-bold" th:text="${form.id == null ? 'Add a project' : 'Edit project'}">Add a project</h1>
+
+    <p th:if="${msg}" role="status" class="toast mt-4 rounded-lg border border-lagoon/40 bg-lagoon/10 px-4 py-3 text-sm text-lagoon" th:text="${msg}"></p>
+    <p th:if="${error}" role="alert" class="mt-4 rounded-lg border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-300" th:text="${error}"></p>
+
+    <form th:action="@{/admin/projects(_csrf=${_csrf.token})}" method="post" enctype="multipart/form-data" class="mt-6 space-y-4">
+      <input type="hidden" name="id" th:value="${form.id}">
+      <label class="block"><span class="mb-1 block text-sm text-muted">Title</span>
+        <input class="field" name="title" required maxlength="120" th:value="${form.title}"></label>
+      <label class="block"><span class="mb-1 block text-sm text-muted">What it does</span>
+        <textarea class="field" name="description" rows="4" maxlength="1500" th:text="${form.description}"></textarea></label>
+      <label class="block"><span class="mb-1 block text-sm text-muted">Tech used (separate with commas)</span>
+        <input class="field" name="techStack" placeholder="React, Node.js, MongoDB" th:value="${form.techStack}"></label>
+      <label class="block"><span class="mb-1 block text-sm text-muted">Live link</span>
+        <input class="field" type="url" name="liveUrl" placeholder="https://" th:value="${form.liveUrl}"></label>
+      <label class="block"><span class="mb-1 block text-sm text-muted">GitHub link</span>
+        <input class="field" type="url" name="githubUrl" placeholder="https://github.com/" th:value="${form.githubUrl}"></label>
+      <label class="block"><span class="mb-1 block text-sm text-muted">Project photo (upload)</span>
+        <input class="field" type="file" name="image" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+      <label class="block"><span class="mb-1 block text-sm text-muted">Or paste a photo link</span>
+        <input class="field" name="imageUrl" placeholder="https://" th:value="${form.imageUrl}"></label>
+      <div class="flex gap-3 pt-2">
+        <button class="btn" type="submit" th:text="${form.id == null ? 'Save project' : 'Update project'}">Save project</button>
+        <a th:if="${form.id != null}" th:href="@{/admin}" class="btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </section>
+
+  <section class="enter lg:col-span-3" style="--d:150ms">
+    <h2 class="font-display text-2xl font-bold">Your projects (<span th:text="${#lists.size(projects)}">0</span>)</h2>
+    <p th:if="${projects.isEmpty()}" class="mt-6 rounded-xl border border-dashed border-line p-8 text-center text-muted">
+      No projects yet. Fill the form to add your first one.
+    </p>
+    <ul class="mt-6 space-y-4">
+      <li th:each="p : ${projects}" class="flex flex-wrap items-center gap-4 rounded-xl border border-line bg-panel p-4">
+        <img th:if="${p.imageUrl}" th:src="@{${p.imageUrl}}" alt="" class="h-16 w-24 flex-none rounded-lg object-cover">
+        <div class="min-w-[9rem] flex-1">
+          <p class="truncate font-display text-lg font-bold" th:text="${p.title}">Title</p>
+          <p class="truncate text-sm text-muted" th:text="${p.techStack}">Tech</p>
+        </div>
+        <a th:href="@{/admin(edit=${p.id})}" class="btn-ghost !px-4 !py-2 text-sm">Edit</a>
+        <form th:action="@{/admin/projects/{id}/delete(id=${p.id})}" method="post" onsubmit="return confirm('Delete this project?')">
+          <button class="btn-ghost danger !px-4 !py-2 text-sm" type="submit">Delete</button>
+        </form>
+      </li>
+    </ul>
+  </section>
+</main>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${title}">Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: { deep: '#07161C', panel: '#0D2530', line: '#1C4150', mist: '#E9F3F1', muted: '#8FB0B3', saffron: '#FFB347', lagoon: '#2DD4BF' },
+        fontFamily: { display: ['Syne', 'sans-serif'], body: ['Hanken Grotesk', 'sans-serif'] }
+      } }
+    }
+  </script>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body></body>
+</html>
